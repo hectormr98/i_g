@@ -67,6 +67,13 @@ Pyramid::Pyramid(GLdouble r, GLdouble h) {
 
 }
 
+void Pyramid::draw() {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glLineWidth(1);
+	mesh->draw();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
 void ContCubo::draw() {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glLineWidth(1);
@@ -78,12 +85,17 @@ ContCubo::ContCubo(GLdouble h) {
 	mesh = Mesh::generateContCubo(h);
 
 }
-
-void Pyramid::draw() {
+void Diabolo::draw() {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glLineWidth(1);
 	mesh->draw();
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+Diabolo::Diabolo(GLdouble r, GLdouble h) {
+
+	mesh = Mesh::generateDiabolo(r, h);
+
 }
 //--------------------------------------------------------------------------
 //comentario

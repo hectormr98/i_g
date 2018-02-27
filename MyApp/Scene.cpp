@@ -12,13 +12,18 @@ void Scene::init()
   // lights
   // textures  
 
-  // objets
-  objetos.push_back(new EjesRGB(200.0));
-  //objetos.push_back(new Triangle(75));
-  objetos.push_back(new Pyramid(100.0, 250));
-  objetos.push_back(new ContCubo(100));
-  objetos.push_back(new TriangleRGB(50));
+  // objetos
 
+  //4 objetos en pantalla divididos
+	//objetos.push_back(new EjesRGB(200.0));
+	//objetos.push_back(new Triangle(75));
+	objetos.push_back(new Pyramid(100.0, 250));
+	objetos.push_back(new ContCubo(100));
+	objetos.push_back(new TriangleRGB(50));
+	objetos.push_back(new Diabolo(50, 100));
+
+  //Diabolo
+	objetos.push_back(new TriangleRGB(100));
 
   
 }

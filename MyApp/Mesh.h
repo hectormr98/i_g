@@ -15,6 +15,7 @@ public:
   static Mesh* generateAxesRGB(GLdouble l);
   static Mesh* generatePyramid(GLdouble r, GLdouble l);
   static Mesh* generateContCubo(GLdouble l);
+  static Mesh* generateDiabolo(GLdouble r,GLdouble l);
 
  
   Mesh(void) { };

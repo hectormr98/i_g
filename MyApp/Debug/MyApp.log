@@ -1,4 +1,3 @@
 ﻿  Scene.cpp
-c:\users\hecto\universidad\2º\i_g\myapp\scene.cpp(40): warning C4018: '<': signed/unsigned mismatch
-  MyApp.vcxproj -> C:\Users\hecto\UNIVERSIDAD\2º\i_g\bin\MyAppDebug.exe
-  MyApp.vcxproj -> C:\Users\hecto\UNIVERSIDAD\2º\i_g\bin\MyAppDebug.pdb (Full PDB)
+c:\users\pekev\onedrive\documentos\github\i_g\myapp\scene.cpp(45): warning C4018: '<': no coinciden signed/unsigned
+  MyApp.vcxproj -> C:\Users\pekev\OneDrive\Documentos\GitHub\i_g\bin\MyAppDebug.exe
