@@ -55,5 +55,11 @@ public:
 	~Pyramid() {};
 	virtual void draw();
 };
+class ContCubo :public Entity {
+public:
+	ContCubo(GLdouble h);
+	~ContCubo() {};
+	virtual void draw();
+};
 
 #endif //_H_Entities_H_

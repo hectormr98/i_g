@@ -14,9 +14,12 @@ void Scene::init()
 
   // objets
   objetos.push_back(new EjesRGB(200.0));
-  objetos.push_back(new Triangle(75));
+  //objetos.push_back(new Triangle(75));
+  objetos.push_back(new Pyramid(100.0, 250));
+  objetos.push_back(new ContCubo(100));
   objetos.push_back(new TriangleRGB(50));
-  objetos.push_back(new Pyramid(100.0, 500));
+
+
   
 }
 //-------------------------------------------------------------------------
@@ -34,10 +37,10 @@ Scene::~Scene()
 void Scene::render()
 {
   glMatrixMode(GL_MODELVIEW);
-
-	for each (Entity* it in objetos)
+	for (int i = 0; i < objetos.size(); i++)// Entity* it in objetos)
 	{
-		it->render(camera->getViewMat());
+		camera->getVP()->setPos(camera->getVP()->getW()/2*(i%2)-camera->getVP()->getW()/4, camera->getVP()->getH()/2*(i/2)-camera->getVP()->getH()/4);
+		objetos[i]->render(camera->getViewMat());
 	}
 }
 //-------------------------------------------------------------------------

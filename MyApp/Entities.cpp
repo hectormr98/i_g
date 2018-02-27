@@ -67,6 +67,18 @@ Pyramid::Pyramid(GLdouble r, GLdouble h) {
 
 }
 
+void ContCubo::draw() {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glLineWidth(1);
+	mesh->draw();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+ContCubo::ContCubo(GLdouble h) {
+
+	mesh = Mesh::generateContCubo(h);
+
+}
+
 void Pyramid::draw() {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glLineWidth(1);

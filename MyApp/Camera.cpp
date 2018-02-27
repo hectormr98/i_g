@@ -19,6 +19,10 @@ using namespace glm;
  { 
    glViewport(x, y, w, h);
  }
+ void Viewport::setPos(GLdouble l, GLdouble g)
+ {
+	 glViewport(l, g, w, h);
+ }
 //-------------------------------------------------------------------------
 
 void Camera::setAZ() 

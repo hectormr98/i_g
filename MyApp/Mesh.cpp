@@ -138,4 +138,36 @@ Mesh* Mesh::generatePyramid(GLdouble r, GLdouble h) {
 
 	return m;
 }
+Mesh * Mesh::generateContCubo(GLdouble l)
+{
+	Mesh* m = new Mesh();
+	m->type = GL_TRIANGLE_STRIP;
+	m->numVertices = 12;
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	m->vertices = new dvec3[m->numVertices];
+
+
+	m->vertices[0] = dvec3(0 ,0 ,l);
+	m->vertices[1] = dvec3(0, 0, 0);
+	m->vertices[2] = dvec3(l, 0, l);
+	m->vertices[3] = dvec3(l, 0, 0);
+	m->vertices[4] = dvec3(l, l, l);
+	m->vertices[5] = dvec3(l, l, 0);
+	m->vertices[6] = dvec3(0, l, l);
+	m->vertices[7] = dvec3(0, l, 0);
+	m->vertices[8] = dvec3(0, 0, l);
+	m->vertices[9] = dvec3(0, 0, 0);
+
+
+
+	m->colors = new dvec4[m->numVertices];
+	/*m->colors[0] = dvec4(1.0, 0.0, 0.0, 1.0);
+	m->colors[1] = dvec4(0.0, 1.0, 0.0, 1.0);
+	m->colors[2] = dvec4(0.0, 0.0, 1.0, 1.0);
+	m->colors[3] = dvec4(0.0, 0.0, 1.0, 1.0);
+	m->colors[4] = dvec4(0.0, 0.0, 1.0, 1.0);
+	*/
+	return m;
+}
 //-------------------------------------------------------------------------
