@@ -1,0 +1,9 @@
+﻿  Camera.cpp
+  Scene.cpp
+  Mesh.cpp
+c:\users\hecto\universidad\2º\i_g\myapp\mesh.cpp(126): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+  Entities.cpp
+  Generating Code...
+  MyApp.vcxproj -> C:\Users\hecto\UNIVERSIDAD\2º\i_g\bin\MyAppDebug.exe
+  MyApp.vcxproj -> C:\Users\hecto\UNIVERSIDAD\2º\i_g\bin\MyAppDebug.pdb (Full PDB)
