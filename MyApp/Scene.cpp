@@ -19,12 +19,16 @@ void Scene::init()
 	//objetos.push_back(new Triangle(75));
 	objetos.push_back(new Pyramid(100.0, 250));
 	objetos.push_back(new ContCubo(100));
-	objetos.push_back(new TriangleRGB(50));
-	objetos.push_back(new Diabolo(50, 100));
+	//objetos.push_back(new TriangleRGB(50));
+	//objetos.push_back(new TriangleRGB(100));
+
 
   //Diabolo
-	objetos.push_back(new TriangleRGB(100));
+	diabolo = new Diabolo(50, 100, 90);
+	objetos.push_back(diabolo);
 
+  //Cubo con tapa
+	objetos.push_back(new Cubo(100, 100, 45));
   
 }
 //-------------------------------------------------------------------------
@@ -47,6 +51,10 @@ void Scene::render()
 		camera->getVP()->setPos(camera->getVP()->getW()/2*(i%2)-camera->getVP()->getW()/4, camera->getVP()->getH()/2*(i/2)-camera->getVP()->getH()/4);
 		objetos[i]->render(camera->getViewMat());
 	}
+}
+Diabolo* Scene::getDiabolo()
+{
+	return diabolo;
 }
 //-------------------------------------------------------------------------
 

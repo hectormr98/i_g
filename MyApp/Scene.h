@@ -15,9 +15,12 @@ public:
     Scene(Camera* cam): camera(cam) { };
 	  ~Scene();
     void init();
-	  void render();    
+	  void render();  
+	  Diabolo* getDiabolo();
 	  
 protected:
+	Diabolo* diabolo = nullptr;
+
 	  Camera* camera;
 	  std::vector<Entity*> objetos;
 };

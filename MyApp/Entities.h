@@ -63,8 +63,20 @@ public:
 };
 class Diabolo :public Entity {
 public:
-	Diabolo(GLdouble r, GLdouble h);
+	float angulo = 90;
+	float r, h;
+	void rotate(float ang);
+	Diabolo(GLdouble r, GLdouble h, float angul);
 	~Diabolo() {};
+	virtual void draw();
+};
+
+class Cubo :public Entity {
+public:
+	Mesh* caja = nullptr;
+	void rotate(float ang);
+	Cubo(GLdouble r, GLdouble h, GLdouble angl);
+	~Cubo() {};
 	virtual void draw();
 };
 

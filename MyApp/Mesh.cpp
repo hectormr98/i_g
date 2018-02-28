@@ -162,15 +162,9 @@ Mesh * Mesh::generateContCubo(GLdouble l)
 
 
 	m->colors = new dvec4[m->numVertices];
-	/*m->colors[0] = dvec4(1.0, 0.0, 0.0, 1.0);
-	m->colors[1] = dvec4(0.0, 1.0, 0.0, 1.0);
-	m->colors[2] = dvec4(0.0, 0.0, 1.0, 1.0);
-	m->colors[3] = dvec4(0.0, 0.0, 1.0, 1.0);
-	m->colors[4] = dvec4(0.0, 0.0, 1.0, 1.0);
-	*/
 	return m;
 }
-Mesh * Mesh::generateDiabolo(GLdouble r,GLdouble l)
+Mesh * Mesh::generateDiabolo(GLdouble r,GLdouble l, float angulo)
 {
 	Mesh* m = new Mesh();
 	m->type = GL_TRIANGLE_FAN;
@@ -183,26 +177,26 @@ Mesh * Mesh::generateDiabolo(GLdouble r,GLdouble l)
 	double x, y, ang;
 	const double aux = 120;
 	for (int i = 1; i < 5; i++) {
-		ang = radians(float(90 + aux*i));
+		ang = radians(float(angulo + aux*i));
 		x = r*cos(ang);
 		y = r*sin(ang);
 		m->vertices[i] = dvec3(x, -l, y);
 	}
 	m->vertices[5] = dvec3(0, 0, 0);
 	for (int i = 6; i < 10; i++) {
-		ang = radians(30+float(aux*i));
+		ang = radians(angulo-60+float(aux*i));
 		x = r*cos(ang);
 		y = r*sin(ang);
 		m->vertices[i] = dvec3(x, -l, y);
 	}
 	for (int i = 10; i < 14; i++) {
-		ang = radians(90 + float(aux*i));
+		ang = radians(angulo + float(aux*i));
 		x = r*cos(ang);
 		y = r*sin(ang);
 		m->vertices[i] = dvec3(x, l, y);
 	}
 	for (int i = 15; i < 19; i++) {
-		ang = radians(30 + float(aux*i));
+		ang = radians(angulo-60 + float(aux*i));
 		x = r*cos(ang);
 		y = r*sin(ang);
 		m->vertices[i] = dvec3(x, l, y);
@@ -225,6 +219,27 @@ Mesh * Mesh::generateDiabolo(GLdouble r,GLdouble l)
 	{
 		m->colors[i] = dvec4(0.0, 0.0, 0.0, 1.0);
 	}
+	return m;
+}
+Mesh * Mesh::generateRectangle(GLdouble w, GLdouble h, float angle)
+{
+	Mesh* m = new Mesh();
+	m->type = GL_TRIANGLE_STRIP;
+	m->numVertices = 5;
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	m->vertices = new dvec3[m->numVertices];
+
+
+	m->vertices[0] = dvec3(0,sin(radians(angle))*h / 2 + w*3/2 - (h/2 + sin(radians(angle))*h/2), -(h / 2 - cos(radians(angle))*h / 2) + h/2 - cos(radians(angle))*h/2);
+	m->vertices[1] = dvec3(0,sin(radians(angle))*h / 2 + w*3/2 - (h/2 - sin(radians(angle))*h/2), -(h / 2 - cos(radians(angle))*h / 2) + h/2 + cos(radians(angle))*h/2);
+	m->vertices[2] = dvec3(w,sin(radians(angle))*h / 2 + w*3/2 - (h/2 - sin(radians(angle))*h/2), -(h / 2 - cos(radians(angle))*h / 2) + h/2 + cos(radians(angle))*h/2);
+	m->vertices[3] = dvec3(w,sin(radians(angle))*h / 2 + w*3/2 - (h/2 + sin(radians(angle))*h/2), -(h / 2 - cos(radians(angle))*h / 2) + h/2 - cos(radians(angle))*h/2);
+	m->vertices[4] = m->vertices[0];
+
+
+
+	m->colors = new dvec4[m->numVertices];
 	return m;
 }
 //-------------------------------------------------------------------------

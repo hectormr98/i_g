@@ -107,6 +107,9 @@ void key(unsigned char key, int x, int y)
   case 'o':
 	  camera.setAZ();
 	  break;
+  case 'a':
+	  scene.getDiabolo()->rotate(5);
+	  break;
   default:
     need_redisplay = false;
     break;

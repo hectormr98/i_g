@@ -88,13 +88,35 @@ ContCubo::ContCubo(GLdouble h) {
 void Diabolo::draw() {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glLineWidth(1);
-	mesh->draw();
 
+	mesh->draw();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
-Diabolo::Diabolo(GLdouble r, GLdouble h) {
+Diabolo::Diabolo(GLdouble radius, GLdouble height, float angul) {
 
-	mesh = Mesh::generateDiabolo(r, h);
+	r = radius;
+	h = height;
+	angulo = angul;
+	mesh = Mesh::generateDiabolo(r, h, angulo);
+
+}
+void Diabolo::rotate(float ang)
+{
+	angulo += ang;
+	mesh = Mesh::generateDiabolo(r, h, angulo);
+}
+
+void Cubo::draw() {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glLineWidth(1);
+	mesh->draw();
+	caja->draw();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+Cubo::Cubo(GLdouble width, GLdouble height, GLdouble angl) 
+{
+	mesh = Mesh::generateRectangle(width, height, angl);
+	caja = Mesh::generateContCubo(width);
 
 }
 //--------------------------------------------------------------------------
