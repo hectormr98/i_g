@@ -28,7 +28,7 @@ void Scene::init()
 	objetos.push_back(diabolo);
 
   //Cubo con tapa
-	objetos.push_back(new Cubo(100, 100, 45));
+	objetos.push_back(new Cubo(50,50, 45));
   
 }
 //-------------------------------------------------------------------------
