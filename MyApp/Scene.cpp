@@ -6,7 +6,12 @@ void Scene::init()
 { // OpenGL basic setting
   glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
   glEnable(GL_DEPTH_TEST);  
-  
+  glEnable(GL_TEXTURE_2D);
+  GLuint Name; GLuint Names[3];
+  glGenTextures(1, &Name);
+  glGenTextures(3, Names);
+  glBindTexture(GL_TEXTURE_2D, Name);
+  glBindTexture(GL_TEXTURE_2D, Names[1]);
   camera->setAZ();
     
   // lights
@@ -28,7 +33,7 @@ void Scene::init()
 	objetos.push_back(diabolo);
 
   //Cubo con tapa
-	objetos.push_back(new Cubo(50,50, 45));
+	objetos.push_back(new Cubo(50,50, 45, 1));
   
 }
 //-------------------------------------------------------------------------

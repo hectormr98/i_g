@@ -5,6 +5,7 @@
 #include <GL/freeglut.h>
 #include <glm.hpp>
 #include "Mesh.h"
+#include "Texture.h"
 
 //-------------------------------------------------------------------------
 
@@ -13,7 +14,7 @@ class Entity
 public:
   Entity() : modelMat(1.0) { };
   virtual ~Entity() { delete mesh; };
-
+  Texture texture;
   virtual void render(glm::dmat4 const& modelViewMat);
   
 protected:
@@ -74,8 +75,7 @@ public:
 class Cubo :public Entity {
 public:
 	Mesh* caja = nullptr;
-	void rotate(float ang);
-	Cubo(GLdouble r, GLdouble h, GLdouble angl);
+	Cubo(GLdouble r, GLdouble h, GLdouble angl, float repeticiones);
 	~Cubo() {};
 	virtual void draw();
 };

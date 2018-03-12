@@ -17,6 +17,8 @@ public:
   static Mesh* generateContCubo(GLdouble l);
   static Mesh* generateDiabolo(GLdouble r,GLdouble l, float angul);
   static Mesh* generateRectangle(GLdouble w, GLdouble h, float angle);
+  static Mesh* generateRectangleTex(GLdouble w, GLdouble h, float angle, float repeticiones);
+  static Mesh* generateCubeTex(GLdouble w, float repeticiones);
 
  
   Mesh(void) { };
@@ -30,6 +32,7 @@ protected:
    GLuint type = GL_POINTS;
    glm::dvec3* vertices = nullptr;
    glm::dvec4* colors = nullptr;
+   glm::dvec2* texCoords = nullptr;
 };
 
 //-------------------------------------------------------------------------

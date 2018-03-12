@@ -107,16 +107,25 @@ void Diabolo::rotate(float ang)
 }
 
 void Cubo::draw() {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	texture.bind();
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glLineWidth(1);
 	mesh->draw();
-	caja->draw();
+
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glLineWidth(1);
+	caja->draw();
+
+	texture.unbind();
 }
-Cubo::Cubo(GLdouble width, GLdouble height, GLdouble angl) 
+Cubo::Cubo(GLdouble width, GLdouble height, GLdouble angl,float repeticiones) 
 {
-	mesh = Mesh::generateRectangle(width, height, angl);
-	caja = Mesh::generateContCubo(width);
+
+	mesh = Mesh::generateRectangleTex(width, height, angl, repeticiones);
+	caja = Mesh::generateCubeTex(width, repeticiones);
+	texture.load("..\\Bmps\\emopng.bmp");
 
 }
 //--------------------------------------------------------------------------

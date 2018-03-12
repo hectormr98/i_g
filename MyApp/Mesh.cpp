@@ -21,7 +21,11 @@ void Mesh::draw()
       glEnableClientState(GL_COLOR_ARRAY);
       glColorPointer(4, GL_DOUBLE, 0, colors);   // number of coordinates per color, type of each coordinate 
     }
-	
+	if (texCoords != nullptr)
+	{
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glTexCoordPointer(2, GL_DOUBLE, 0, texCoords);
+	}
     glDrawArrays(type, 0, numVertices);   // kind of primitives, first, count
 
 	  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -148,15 +152,15 @@ Mesh * Mesh::generateContCubo(GLdouble l)
 	m->vertices = new dvec3[m->numVertices];
 
 
-	m->vertices[0] = dvec3(0 ,0 ,l);
+	m->vertices[0] = dvec3(0 ,l ,0);
 	m->vertices[1] = dvec3(0, 0, 0);
-	m->vertices[2] = dvec3(l, 0, l);
+	m->vertices[2] = dvec3(l, l, 0);
 	m->vertices[3] = dvec3(l, 0, 0);
 	m->vertices[4] = dvec3(l, l, l);
-	m->vertices[5] = dvec3(l, l, 0);
+	m->vertices[5] = dvec3(l, 0, l);
 	m->vertices[6] = dvec3(0, l, l);
-	m->vertices[7] = dvec3(0, l, 0);
-	m->vertices[8] = dvec3(0, 0, l);
+	m->vertices[7] = dvec3(0, 0, l);
+	m->vertices[8] = dvec3(0, l, 0);
 	m->vertices[9] = dvec3(0, 0, 0);
 
 
@@ -231,15 +235,49 @@ Mesh * Mesh::generateRectangle(GLdouble w, GLdouble h, float angle)
 	m->vertices = new dvec3[m->numVertices];
 
 
-	m->vertices[0] = dvec3(0,sin(radians(angle))*h / 2 + w*3/2 - (h/2 + sin(radians(angle))*h/2), -(h / 2 - cos(radians(angle))*h / 2) + h/2 - cos(radians(angle))*h/2);
-	m->vertices[1] = dvec3(0,sin(radians(angle))*h / 2 + w*3/2 - (h/2 - sin(radians(angle))*h/2), -(h / 2 - cos(radians(angle))*h / 2) + h/2 + cos(radians(angle))*h/2);
-	m->vertices[2] = dvec3(w,sin(radians(angle))*h / 2 + w*3/2 - (h/2 - sin(radians(angle))*h/2), -(h / 2 - cos(radians(angle))*h / 2) + h/2 + cos(radians(angle))*h/2);
-	m->vertices[3] = dvec3(w,sin(radians(angle))*h / 2 + w*3/2 - (h/2 + sin(radians(angle))*h/2), -(h / 2 - cos(radians(angle))*h / 2) + h/2 - cos(radians(angle))*h/2);
+	m->vertices[0] = dvec3(0, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 + sin(radians(angle))*h / 2), -(h / 2 - cos(radians(angle))*h / 2) + h / 2 - cos(radians(angle))*h / 2);
+	m->vertices[1] = dvec3(0, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 - sin(radians(angle))*h / 2), -(h / 2 - cos(radians(angle))*h / 2) + h / 2 + cos(radians(angle))*h / 2);
+	m->vertices[2] = dvec3(w, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 - sin(radians(angle))*h / 2), -(h / 2 - cos(radians(angle))*h / 2) + h / 2 + cos(radians(angle))*h / 2);
+	m->vertices[3] = dvec3(w, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 + sin(radians(angle))*h / 2), -(h / 2 - cos(radians(angle))*h / 2) + h / 2 - cos(radians(angle))*h / 2);
 	m->vertices[4] = m->vertices[0];
 
 
 
 	m->colors = new dvec4[m->numVertices];
+	return m;
+}
+Mesh* Mesh::generateRectangleTex(GLdouble w, GLdouble h, float angle, float repeticiones)
+{
+	//Texturas
+	Mesh* m = generateRectangle(w, h, angle);
+	m->texCoords = new dvec2[m->numVertices];
+	m->texCoords[0] = dvec2(1*repeticiones, 0);
+	m->texCoords[1] = dvec2(1*repeticiones, 1*repeticiones);
+	m->texCoords[2] = dvec2(0, 1*repeticiones);
+	m->texCoords[3] = dvec2(0, 0);
+	m->texCoords[4] = dvec2(1*repeticiones, 0);
+
+
+
+	return m;
+}
+Mesh* Mesh::generateCubeTex(GLdouble w, float repeticiones)
+{
+	//Texturas
+	Mesh* m = generateContCubo(w);
+	m->texCoords = new dvec2[m->numVertices];
+	m->texCoords[0] = dvec2(0, 1*repeticiones);
+	m->texCoords[1] = dvec2(0, 0);
+	m->texCoords[2] = dvec2(1 * repeticiones, 1 * repeticiones);
+	m->texCoords[3] = dvec2(1 * repeticiones, 0);
+	m->texCoords[4] = dvec2(0, 1 * repeticiones);
+	m->texCoords[5] = dvec2(0, 0);
+	m->texCoords[6] = dvec2(1 * repeticiones, 1 * repeticiones);
+	m->texCoords[7] = dvec2(1 * repeticiones, 0);
+	m->texCoords[8] = dvec2(0, 1 * repeticiones);
+	m->texCoords[9] = dvec2(0, 0);
+
+
 	return m;
 }
 //-------------------------------------------------------------------------
