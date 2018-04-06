@@ -68,6 +68,15 @@ protected:
 
   void setVM();
   void setPM();
+
+
+  void moveLR(GLdouble cs);   // Left / Right 
+  void moveFB(GLdouble cs);   // Forward / Backward 
+  void moveUD(GLdouble cs);  // Up / Down
+  dvec3 front, right;
+  dvec3 n; // -n es la dirección de vista 
+  dvec3 u;// = normalize(cross(up, n));   // ortogonal a up y n 
+  dvec3 v;// = cross(n, u); // ortogonal a n y u 
 };
 
 //-------------------------------------------------------------------------

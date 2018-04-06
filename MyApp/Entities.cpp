@@ -61,17 +61,20 @@ void TriangleRGB::draw() {
 	mesh->draw();
 }
 //-------------------------------------------------------------------------
-Pyramid::Pyramid(GLdouble r, GLdouble h) {
+Pyramid::Pyramid(GLdouble r, GLdouble h, int repeW, int repeH) {
 
-	mesh = Mesh::generatePyramid(r, h);
+	mesh = Mesh::generatePiramidTex(r, h, repeW, repeH);
 
 }
 
 void Pyramid::draw() {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	texture.bind();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glLineWidth(1);
+	texture.load("..\\Bmps\\emopng.bmp");
 	mesh->draw();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	texture.unbind();
 }
 
 void ContCubo::draw() {
@@ -82,28 +85,30 @@ void ContCubo::draw() {
 }
 ContCubo::ContCubo(GLdouble h) {
 
-	mesh = Mesh::generateContCubo(h);
+	mesh = Mesh::generateContCubo(h, 0, 0);
 
 }
 void Diabolo::draw() {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	texture.bind();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glLineWidth(1);
-
+	texture.load("..\\Bmps\\Diabolo.bmp");
 	mesh->draw();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	texture.unbind();
 }
-Diabolo::Diabolo(GLdouble radius, GLdouble height, float angul) {
+Diabolo::Diabolo(GLdouble radius, GLdouble height, float angul, float sepX, float sepY) {
 
 	r = radius;
 	h = height;
 	angulo = angul;
-	mesh = Mesh::generateDiabolo(r, h, angulo);
+	mesh = Mesh::generateDiaboloTex(r, h, angulo, sepX, sepY);
 
 }
-void Diabolo::rotate(float ang)
+void Diabolo::rotate(float ang, float sepX, float sepY)
 {
 	angulo += ang;
-	mesh = Mesh::generateDiabolo(r, h, angulo);
+	mesh = Mesh::generateDiaboloTex(r, h, angulo, sepX, sepY);
 }
 
 void Cubo::draw() {
@@ -111,22 +116,38 @@ void Cubo::draw() {
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glLineWidth(1);
+	texture.load("..\\Bmps\\Caja.bmp");
 	mesh->draw();
 
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glLineWidth(1);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	texture.load("..\\Bmps\\CajaDentro.bmp");
 	caja->draw();
+	glCullFace(GL_FRONT);
+	texture.load("..\\Bmps\\Caja.bmp");
+	caja->draw();
+	glDisable(GL_CULL_FACE);
 
 	texture.unbind();
 }
-Cubo::Cubo(GLdouble width, GLdouble height, GLdouble angl,float repeticiones) 
+Cubo::Cubo(GLdouble width, GLdouble height, GLdouble angl,float repeticionesW, float repeticionesH, float sepX, float sepY) 
 {
+	mesh = Mesh::generateRectangleTex(width, height, angl, repeticionesW, repeticionesH, -sepX, 0);
+	caja = Mesh::generateCubeTex(width, repeticionesW, repeticionesH, -sepX, 0);
+}
 
-	mesh = Mesh::generateRectangleTex(width, height, angl, repeticiones);
-	caja = Mesh::generateCubeTex(width, repeticiones);
-	texture.load("..\\Bmps\\emopng.bmp");
-
+void RectangleTex::draw()
+{
+	texture.bind();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glLineWidth(1);
+	texture.load("..\\Bmps\\Suelo.bmp");
+	mesh->draw();
+	texture.unbind();
+}
+RectangleTex::RectangleTex(GLdouble r, GLdouble h, int repeticionesW, int repeticionesH)
+{
+     mesh = Mesh::generateNormalRectangleTex(r, h, repeticionesW, repeticionesH);
 }
 //--------------------------------------------------------------------------
 //comentario

@@ -14,11 +14,17 @@ public:
   static Mesh* generateTriangleRGB(GLdouble l);
   static Mesh* generateAxesRGB(GLdouble l);
   static Mesh* generatePyramid(GLdouble r, GLdouble l);
-  static Mesh* generateContCubo(GLdouble l);
-  static Mesh* generateDiabolo(GLdouble r,GLdouble l, float angul);
-  static Mesh* generateRectangle(GLdouble w, GLdouble h, float angle);
-  static Mesh* generateRectangleTex(GLdouble w, GLdouble h, float angle, float repeticiones);
-  static Mesh* generateCubeTex(GLdouble w, float repeticiones);
+  static Mesh* generatePiramidTex(GLdouble w, GLdouble h, float repeticionesW, float repeticionesH);
+  static Mesh* generateContCubo(GLdouble l, float separacionX, float separacionY);
+  static Mesh* generateCubeTex(GLdouble w, float repeticionesW, float repeticionesH, float sepX, float sepY);
+  static Mesh* generateDiabolo(GLdouble r,GLdouble l, float angul, float sepX, float sepY);
+  static Mesh* generateDiaboloTex(GLdouble r, GLdouble l, float angul, float sepX, float sepY);
+  static Mesh* generateRectangle(GLdouble w, GLdouble h, float angle, float separacionX, float separacionY);
+  static Mesh* generateNormalRectangle(GLdouble w, GLdouble h, int repeW, int repeH);
+  static Mesh* generateNormalRectangleTex(GLdouble w, GLdouble h, int repeW, int repeH);
+  static Mesh* generateRectangleTex(GLdouble w, GLdouble h, float angle, float repeticionesW, float repeticionesH, float sepX, float sepY);
+
+
 
  
   Mesh(void) { };

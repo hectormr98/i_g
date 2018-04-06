@@ -1,3 +1,3 @@
-﻿  Scene.cpp
-c:\users\pekev\onedrive\documentos\github\i_g\myapp\scene.cpp(54): warning C4018: '<': no coinciden signed/unsigned
+﻿  Camera.cpp
+c:\users\pekev\onedrive\documentos\github\i_g\myapp\camera.cpp(24): warning C4244: 'argumento': conversión de 'GLdouble' a 'GLint'; posible pérdida de datos
   MyApp.vcxproj -> C:\Users\pekev\OneDrive\Documentos\GitHub\i_g\bin\MyAppDebug.exe

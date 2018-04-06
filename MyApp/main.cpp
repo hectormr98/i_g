@@ -91,6 +91,7 @@ void key(unsigned char key, int x, int y)
 {
   bool need_redisplay = true;
 
+  Texture text;
   switch (key) {
   case 27:  // Escape key 
     glutLeaveMainLoop();  // Freeglut's sentence for stopping glut's main loop 
@@ -108,11 +109,16 @@ void key(unsigned char key, int x, int y)
 	  camera.setAZ();
 	  break;
   case 'a':
-	  scene.getDiabolo()->rotate(5);
+	  scene.getDiabolo()->rotate(5, 50, 50);
+	  break;
+  case 'f':
+	  text.loadColorBuffer(glutGet(GLUT_INIT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+	  text.save("Fotaca");
 	  break;
   default:
     need_redisplay = false;
     break;
+	
   }//switch
 
   if (need_redisplay)

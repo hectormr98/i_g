@@ -52,7 +52,7 @@ public:
 //-------------------------------------------------------------------------
 class Pyramid :public Entity {
 public:
-	Pyramid(GLdouble r, GLdouble h);
+	Pyramid(GLdouble r, GLdouble h, int repeW, int repeH);
 	~Pyramid() {};
 	virtual void draw();
 };
@@ -66,16 +66,24 @@ class Diabolo :public Entity {
 public:
 	float angulo = 90;
 	float r, h;
-	void rotate(float ang);
-	Diabolo(GLdouble r, GLdouble h, float angul);
+	void rotate(float ang, float sepX, float sepY);
+	Diabolo(GLdouble r, GLdouble h, float angul, float sepX, float sepY);
 	~Diabolo() {};
+	virtual void draw();
+};
+
+class RectangleTex :public Entity
+{
+public:
+	RectangleTex(GLdouble r, GLdouble h, int repeticionesW, int repeticionesH);
+	~RectangleTex() {};
 	virtual void draw();
 };
 
 class Cubo :public Entity {
 public:
 	Mesh* caja = nullptr;
-	Cubo(GLdouble r, GLdouble h, GLdouble angl, float repeticiones);
+	Cubo(GLdouble r, GLdouble h, GLdouble angl, float repeticionesW, float repeticionesH, float sepX, float sepY);
 	~Cubo() {};
 	virtual void draw();
 };

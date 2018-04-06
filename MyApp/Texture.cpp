@@ -29,3 +29,20 @@ bool Texture::load(const std::string & BMP_Name, GLubyte alpha) {
 	// transferir a openGL
 	return true;
 }
+
+void Texture::loadColorBuffer(GLsizei width, GLsizei height)
+{
+	if (id == 0) init();
+	w = width;
+	h = height;
+	glReadBuffer(GL_FRONT);
+	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, width, height, 0);
+}
+
+void Texture::save(const std::string & Foto)
+{
+	PixMap32RGBA pixMap;
+	pixMap.create_pixmap(w, h);
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixMap.data());
+	pixMap.save_bmp24BGR("..\\Bmps\\"+Foto+".bmp");
+}

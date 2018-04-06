@@ -27,9 +27,14 @@ using namespace glm;
 
 void Camera::setAZ() 
 {
-  eye= dvec3(0, 0, 500);
+  eye= dvec3(100, 200, 500);
   look= dvec3(0, 0, 0);
   up= dvec3(0, 1, 0);
+
+  dvec3 aux = eye - look;
+  n = normalize(aux);
+  u = normalize(cross(up, n));
+  v = cross(n, u);
   viewMat = lookAt(eye, look, up);
   setVM();
 }
@@ -40,6 +45,10 @@ void Camera::set3D()
   eye= dvec3(500, 500, 500);
   look= dvec3(0, 10, 0);
   up= dvec3(0, 1, 0);
+  dvec3 aux = eye - look;
+  n = normalize(aux);
+  u = normalize(cross(up, n));
+  v = cross(n, u);
   viewMat = lookAt(eye, look, up);
   setVM();
 }
@@ -93,6 +102,13 @@ void Camera::setPM()
   glMatrixMode(GL_PROJECTION);
   glLoadMatrixd(value_ptr(projMat));
   glMatrixMode(GL_MODELVIEW);
+}
+
+void Camera::moveLR(GLdouble cs)
+{
+	front = -n;
+	eye = eye + (front * cs);
+	viewMat = lookAt(eye, eye + front, up);
 }
 //-------------------------------------------------------------------------
 
