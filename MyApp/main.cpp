@@ -108,12 +108,25 @@ void key(unsigned char key, int x, int y)
   case 'o':
 	  camera.setAZ();
 	  break;
-  case 'a':
+/*  case 'a':
 	  scene.getDiabolo()->rotate(5, 50, 50);
 	  break;
+	  */
   case 'f':
 	  text.loadColorBuffer(glutGet(GLUT_INIT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	  text.save("Fotaca");
+	  break;
+  case 'w':
+	  camera.moveLR(5);
+	  break;
+  case 's':
+	  camera.moveLR(-5);
+	  break;
+  case 'd':
+	  camera.moveFB(5);
+	  break;
+  case 'a':
+	  camera.moveFB(-5);
 	  break;
   default:
     need_redisplay = false;

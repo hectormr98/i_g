@@ -5,6 +5,8 @@
 #include <GL/freeglut.h>
 #include <glm.hpp>
 
+using namespace glm;
+
 //-------------------------------------------------------------------------
 
 class Viewport {   
@@ -51,6 +53,10 @@ public:
 
   void setSize(GLdouble aw, GLdouble ah);
   void scale(GLdouble s); 
+
+  void moveLR(GLdouble cs);   // Left / Right 
+  void moveFB(GLdouble cs);   // Forward / Backward 
+  void moveUD(GLdouble cs);  // Up / Down
  
 protected:
   glm::dvec3 eye = { 0.0, 0.0, 500.0 };
@@ -70,13 +76,14 @@ protected:
   void setPM();
 
 
-  void moveLR(GLdouble cs);   // Left / Right 
-  void moveFB(GLdouble cs);   // Forward / Backward 
-  void moveUD(GLdouble cs);  // Up / Down
-  dvec3 front, right;
+
+  dvec3 front;
+  dvec3 right;
   dvec3 n; // -n es la dirección de vista 
   dvec3 u;// = normalize(cross(up, n));   // ortogonal a up y n 
   dvec3 v;// = cross(n, u); // ortogonal a n y u 
+  dvec3 lookAux;
+  //void update();
 };
 
 //-------------------------------------------------------------------------

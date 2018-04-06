@@ -54,20 +54,6 @@ void Scene::render()
 {
   glMatrixMode(GL_MODELVIEW);
   int size = objetos.size();
-  /*if (size == 4)
-  {
-	  for (int i = 0; i < objetos.size(); i++)// Entity* it in objetos)
-	  {
-		  camera->getVP()->setPos(camera->getVP()->getW() / (size / 2)*(i % 2) - camera->getVP()->getW() / 4, camera->getVP()->getH() / (size / 2)*(i / 2) - camera->getVP()->getH() / 4);
-		  objetos[i]->render(camera->getViewMat());
-	  }
-  }
-  else
-  {
-	  camera->getVP()->setPos(0, 0);//camera->getVP()->getW() / 4, camera->getVP()->getH() / 4);
-	  objetos[0]->render(camera->getViewMat());
-  }
-  */
   for (int i = 0; i < size; i++)
   {
 	  objetos[i]->render(camera->getViewMat());

@@ -3,7 +3,6 @@
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
 
-using namespace glm;
 
 //-------------------------------------------------------------------------
 
@@ -30,11 +29,12 @@ void Camera::setAZ()
   eye= dvec3(100, 200, 500);
   look= dvec3(0, 0, 0);
   up= dvec3(0, 1, 0);
-
-  dvec3 aux = eye - look;
-  n = normalize(aux);
+  n = normalize(eye - look);
   u = normalize(cross(up, n));
   v = cross(n, u);
+  front = -n;
+  right = u;
+  up = v;
   viewMat = lookAt(eye, look, up);
   setVM();
 }
@@ -45,10 +45,12 @@ void Camera::set3D()
   eye= dvec3(500, 500, 500);
   look= dvec3(0, 10, 0);
   up= dvec3(0, 1, 0);
-  dvec3 aux = eye - look;
-  n = normalize(aux);
+  n = normalize(eye - look);
   u = normalize(cross(up, n));
   v = cross(n, u);
+  front = -n;
+  right = u;
+  up = v;
   viewMat = lookAt(eye, look, up);
   setVM();
 }
@@ -106,10 +108,28 @@ void Camera::setPM()
 
 void Camera::moveLR(GLdouble cs)
 {
-	front = -n;
+	//update();
 	eye = eye + (front * cs);
+	look = look + (front*cs);
 	viewMat = lookAt(eye, eye + front, up);
 }
+
+void Camera::moveFB(GLdouble cs)
+{
+	//update();
+	eye = eye + (right * cs);
+	viewMat = lookAt(eye, eye + front, up);
+
+}
+
+void Camera::moveUD(GLdouble cs)
+{
+	//update();
+	eye = eye + (up * cs);
+	viewMat = lookAt(eye, eye + front, up);
+}
+
+
 //-------------------------------------------------------------------------
 
 
