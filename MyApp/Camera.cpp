@@ -36,6 +36,14 @@ void Camera::setAZ()
   right = u;
   up = v;
   viewMat = lookAt(eye, look, up);
+
+  if (pitc > 89.5) pitc = 89.5;
+  front.x = sin(radians(ya))*cos(radians(pitc));
+  front.y = sin(radians(pitc));
+  front.z = -cos(radians(ya))*cos(radians(pitc));
+  front = glm::normalize(front);
+  viewMat = lookAt(eye, eye + front, up);
+
   setVM();
 }
 //-------------------------------------------------------------------------
@@ -52,6 +60,14 @@ void Camera::set3D()
   right = u;
   up = v;
   viewMat = lookAt(eye, look, up);
+
+  if (pitc > 89.5) pitc = 89.5;
+  front.x = sin(radians(ya))*cos(radians(pitc));
+  front.y = sin(radians(pitc));
+  front.z = -cos(radians(ya))*cos(radians(pitc));
+  front = glm::normalize(front);
+  viewMat = lookAt(eye, eye + front, up);
+
   setVM();
 }
 //-------------------------------------------------------------------------
@@ -100,7 +116,10 @@ void Camera::setSize(GLdouble aw, GLdouble ah)
 
 void Camera::setPM() 
 {
-  projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
+	if(orto)
+		projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
+	else
+		projMat = frustum(-500, 500, -250, 250, 500, 10000);
   glMatrixMode(GL_PROJECTION);
   glLoadMatrixd(value_ptr(projMat));
   glMatrixMode(GL_MODELVIEW);
@@ -108,7 +127,6 @@ void Camera::setPM()
 
 void Camera::moveLR(GLdouble cs)
 {
-	//update();
 	eye = eye + (front * cs);
 	look = look + (front*cs);
 	viewMat = lookAt(eye, eye + front, up);
@@ -116,17 +134,32 @@ void Camera::moveLR(GLdouble cs)
 
 void Camera::moveFB(GLdouble cs)
 {
-	//update();
 	eye = eye + (right * cs);
 	viewMat = lookAt(eye, eye + front, up);
-
 }
 
 void Camera::moveUD(GLdouble cs)
 {
-	//update();
 	eye = eye + (up * cs);
 	viewMat = lookAt(eye, eye + front, up);
+}
+
+void Camera::rotatePY(GLdouble incrPitch, GLdouble incrYaw)
+{
+	pitc += incrPitch;
+	ya += incrYaw;
+	if (pitc > 89.5) pitc = 89.5;
+	front.x = sin(radians(ya))*cos(radians(pitc));
+	front.y = sin(radians(pitc));
+	front.z = -cos(radians(ya))*cos(radians(pitc));
+	front = glm::normalize(front);
+	viewMat = lookAt(eye, eye + front, up);
+}
+
+void Camera::setPrj()
+{
+	orto = !orto;
+	setPM();
 }
 
 

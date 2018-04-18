@@ -263,7 +263,7 @@ Mesh * Mesh::generateDiaboloTex(GLdouble r, GLdouble l, float angulo, float sepX
 
 	return m;
 }
-Mesh * Mesh::generateRectangle(GLdouble w, GLdouble h, float angle, float separacionX, float separacionY)
+Mesh * Mesh::generateRectangle(GLdouble w, GLdouble h, float angle, float separacionX, float separacionY, GLdouble altura, GLdouble angulo)
 {
 	Mesh* m = new Mesh();
 	m->type = GL_TRIANGLE_STRIP;
@@ -273,10 +273,10 @@ Mesh * Mesh::generateRectangle(GLdouble w, GLdouble h, float angle, float separa
 	m->vertices = new dvec3[m->numVertices];
 
 
-	m->vertices[0] = dvec3(separacionX, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 + sin(radians(angle))*h / 2), -(h / 2 - cos(radians(angle))*h / 2) + h / 2 - cos(radians(angle))*h / 2+separacionY);
-	m->vertices[1] = dvec3(separacionX, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 - sin(radians(angle))*h / 2), -(h / 2 - cos(radians(angle))*h / 2) + h / 2 + cos(radians(angle))*h / 2+separacionY);
-	m->vertices[2] = dvec3(w+separacionX, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 - sin(radians(angle))*h / 2), -(h / 2 - cos(radians(angle))*h / 2) + h / 2 + cos(radians(angle))*h / 2+separacionY);
-	m->vertices[3] = dvec3(w+separacionX, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 + sin(radians(angle))*h / 2), -(h / 2 - cos(radians(angle))*h / 2) + h / 2 - cos(radians(angle))*h / 2+separacionY);
+	m->vertices[0] = dvec3(separacionX, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 + sin(radians(angle))*h / 2) +altura, -(h / 2 - cos(radians(angle))*h / 2) + h / 2 - cos(radians(angle))*h / 2+separacionY);
+	m->vertices[1] = dvec3(separacionX, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 - sin(radians(angle))*h / 2)+altura, -(h / 2 - cos(radians(angle))*h / 2) + h / 2 + cos(radians(angle))*h / 2+separacionY);
+	m->vertices[2] = dvec3(w+separacionX, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 - sin(radians(angle))*h / 2)+altura, -(h / 2 - cos(radians(angle))*h / 2) + h / 2 + cos(radians(angle))*h / 2+separacionY);
+	m->vertices[3] = dvec3(w+separacionX, sin(radians(angle))*h / 2 + w * 3 / 2 - (h / 2 + sin(radians(angle))*h / 2)+altura, -(h / 2 - cos(radians(angle))*h / 2) + h / 2 - cos(radians(angle))*h / 2+separacionY);
 	m->vertices[4] = m->vertices[0];
 
 
@@ -318,10 +318,10 @@ Mesh* Mesh::generateNormalRectangleTex(GLdouble w, GLdouble h, int repeticionesW
 
 	return m;
 }
-Mesh* Mesh::generateRectangleTex(GLdouble w, GLdouble h, float angle, float repeticionesW, float repeticionesH, float sepX, float sepY)
+Mesh* Mesh::generateRectangleTex(GLdouble w, GLdouble h, float angle, float repeticionesW, float repeticionesH, float sepX, float sepY, GLdouble altura, GLdouble angulo)
 {
 	//Texturas
-	Mesh* m = generateRectangle(w, h, angle, sepX, sepY);
+	Mesh* m = generateRectangle(w, h, angle, sepX, sepY, altura, angulo);
 	m->texCoords = new dvec2[m->numVertices];
 	m->texCoords[0] = dvec2(1*repeticionesW, 0);
 	m->texCoords[1] = dvec2(1*repeticionesW, 1*repeticionesH);

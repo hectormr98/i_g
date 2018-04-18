@@ -22,6 +22,11 @@ Camera camera(&viewPort);
 // Scene entities
 Scene scene(&camera);   
 
+dvec2 mousePos;
+void mouse(int button, int state, int x, int y);
+void motion(int x, int y);
+
+
 //----------- Callbacks ----------------------------------------------------
 
 void display();
@@ -53,6 +58,9 @@ int main(int argc, char *argv[])
   glutKeyboardFunc(key);
   glutSpecialFunc(specialKey);
   glutDisplayFunc(display);
+
+  glutMouseFunc(mouse);
+  glutMotionFunc(motion);
  
   cout << glGetString(GL_VERSION) << '\n';
   cout << glGetString(GL_VENDOR) << '\n';
@@ -78,6 +86,21 @@ void display()   // double buffer
 }
 //-------------------------------------------------------------------------
 
+
+void mouse(int button, int state, int x, int y)
+{
+	mousePos.x = x;
+	mousePos.y = glutGet(GLUT_WINDOW_HEIGHT) - y;
+}
+
+void motion(int x, int y)
+{
+	dvec2 mouseOffSet = mousePos;
+	mousePos = dvec2(x, glutGet(GLUT_WINDOW_HEIGHT)-y);
+	mouseOffSet = (mousePos - mouseOffSet)*0.05;
+	camera.rotatePY(mouseOffSet.y, mouseOffSet.x);
+	glutPostRedisplay();
+}
 void resize(int newWidth, int newHeight)
 {
   // Resize Viewport 
@@ -108,10 +131,9 @@ void key(unsigned char key, int x, int y)
   case 'o':
 	  camera.setAZ();
 	  break;
-/*  case 'a':
+  case 'h':
 	  scene.getDiabolo()->rotate(5, 50, 50);
 	  break;
-	  */
   case 'f':
 	  text.loadColorBuffer(glutGet(GLUT_INIT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	  text.save("Fotaca");
@@ -127,6 +149,9 @@ void key(unsigned char key, int x, int y)
 	  break;
   case 'a':
 	  camera.moveFB(-5);
+	  break;
+  case 'p':
+	  camera.setPrj();
 	  break;
   default:
     need_redisplay = false;

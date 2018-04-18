@@ -19,10 +19,10 @@ public:
   static Mesh* generateCubeTex(GLdouble w, float repeticionesW, float repeticionesH, float sepX, float sepY);
   static Mesh* generateDiabolo(GLdouble r,GLdouble l, float angul, float sepX, float sepY);
   static Mesh* generateDiaboloTex(GLdouble r, GLdouble l, float angul, float sepX, float sepY);
-  static Mesh* generateRectangle(GLdouble w, GLdouble h, float angle, float separacionX, float separacionY);
+  static Mesh* generateRectangle(GLdouble w, GLdouble h, float angle, float separacionX, float separacionY, GLdouble altura, GLdouble angulo);
   static Mesh* generateNormalRectangle(GLdouble w, GLdouble h, int repeW, int repeH);
   static Mesh* generateNormalRectangleTex(GLdouble w, GLdouble h, int repeW, int repeH);
-  static Mesh* generateRectangleTex(GLdouble w, GLdouble h, float angle, float repeticionesW, float repeticionesH, float sepX, float sepY);
+  static Mesh* generateRectangleTex(GLdouble w, GLdouble h, float angle, float repeticionesW, float repeticionesH, float sepX, float sepY, GLdouble altura, GLdouble angulo);
 
 
 

@@ -23,11 +23,33 @@ bool Texture::load(const std::string & BMP_Name, GLubyte alpha) {
 	if (alpha != 255) pixMap.set_alpha(alpha);
 	w = pixMap.width();
 	h = pixMap.height();
+	//pixMap.set_colorkey_alpha(0);
 	glBindTexture(GL_TEXTURE_2D, id);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA,
 		GL_UNSIGNED_BYTE, pixMap.data());
 	// transferir a openGL
 	return true;
+}
+
+bool Texture::loadTrans(const std::string & BMP_Name, glm::dvec3 color)
+{
+	PixMap32RGBA::rgba_color col;
+	col.r = color.x;
+	col.g = color.y;
+	col.b = color.z;
+	if (id == 0) init();
+	PixMap32RGBA pixMap; // var. local para cargar la imagen del archivo
+	pixMap.load_bmp24BGR(BMP_Name); // carga y añade alpha=255
+					// carga correcta?
+	w = pixMap.width();
+	h = pixMap.height();
+	pixMap.set_colorkey_alpha(col,0);
+	glBindTexture(GL_TEXTURE_2D, id);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA,
+		GL_UNSIGNED_BYTE, pixMap.data());
+	// transferir a openGL
+	return true;
+
 }
 
 void Texture::loadColorBuffer(GLsizei width, GLsizei height)

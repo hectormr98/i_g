@@ -75,7 +75,7 @@ public:
 class RectangleTex :public Entity
 {
 public:
-	RectangleTex(GLdouble r, GLdouble h, int repeticionesW, int repeticionesH);
+	RectangleTex(GLdouble r, GLdouble h, int repeticionesW, int repeticionesH, GLdouble altura, GLdouble angulo);
 	~RectangleTex() {};
 	virtual void draw();
 };
@@ -86,6 +86,24 @@ public:
 	Cubo(GLdouble r, GLdouble h, GLdouble angl, float repeticionesW, float repeticionesH, float sepX, float sepY);
 	~Cubo() {};
 	virtual void draw();
+};
+class GlassPot :public Entity
+{
+public:
+	Mesh* mesh = nullptr;
+	GlassPot(GLdouble r, GLdouble h, GLdouble angl, float repeticionesW, float repeticionesH, float sepX, float sepY);
+	~GlassPot() {};
+	virtual void draw();
+};
+
+class Grass : public Entity
+{
+public:
+	Mesh* mesh = nullptr;
+	Grass(GLdouble r, GLdouble h, GLdouble angl, float repeticionesW, float repeticionesH, float sepX, float sepY);
+	~Grass() {};
+	virtual void draw(int pos);
+	virtual void render(glm::dmat4 const &matrix);
 };
 
 #endif //_H_Entities_H_

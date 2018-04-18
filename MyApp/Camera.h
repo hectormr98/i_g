@@ -48,6 +48,8 @@ public:
   void yaw(GLdouble a);   // rotates a degrees on the Y axis
   void roll(GLdouble a);  // rotates a degrees on the Z axis
 
+  GLdouble pitc, ya;
+
   // projection matrix
   glm::dmat4 const& getProjMat() { return projMat; };
 
@@ -57,6 +59,10 @@ public:
   void moveLR(GLdouble cs);   // Left / Right 
   void moveFB(GLdouble cs);   // Forward / Backward 
   void moveUD(GLdouble cs);  // Up / Down
+
+  void rotatePY(GLdouble incrPitch, GLdouble incrYaw);
+  void setPrj();
+  bool orto = true;
  
 protected:
   glm::dvec3 eye = { 0.0, 0.0, 500.0 };

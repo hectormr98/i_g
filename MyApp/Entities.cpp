@@ -2,7 +2,7 @@
 
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
-
+#include <vector>
 using namespace glm;
 
 void Entity::render(dmat4 const& modelViewMat) 
@@ -132,7 +132,7 @@ void Cubo::draw() {
 }
 Cubo::Cubo(GLdouble width, GLdouble height, GLdouble angl,float repeticionesW, float repeticionesH, float sepX, float sepY) 
 {
-	mesh = Mesh::generateRectangleTex(width, height, angl, repeticionesW, repeticionesH, -sepX, 0);
+	mesh = Mesh::generateRectangleTex(width, height, angl, repeticionesW, repeticionesH, -sepX, 0, 0, 0);
 	caja = Mesh::generateCubeTex(width, repeticionesW, repeticionesH, -sepX, 0);
 }
 
@@ -145,9 +145,59 @@ void RectangleTex::draw()
 	mesh->draw();
 	texture.unbind();
 }
-RectangleTex::RectangleTex(GLdouble r, GLdouble h, int repeticionesW, int repeticionesH)
+RectangleTex::RectangleTex(GLdouble r, GLdouble h, int repeticionesW, int repeticionesH, GLdouble altura, GLdouble angulo)
 {
-     mesh = Mesh::generateNormalRectangleTex(r, h, repeticionesW, repeticionesH);
+     mesh = Mesh::generateNormalRectangleTex(r, h,repeticionesW, repeticionesH);
+}
+
+
+GlassPot::GlassPot(GLdouble r, GLdouble h, GLdouble angl, float repeticionesW, float repeticionesH, float sepX, float sepY)
+{
+	mesh = Mesh::generateCubeTex(r, repeticionesW, repeticionesH, sepX, sepY);
+}
+void GlassPot::draw()
+{
+	texture.bind();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glLineWidth(1);
+	texture.load("..\\Bmps\\window.bmp",150);
+	mesh->draw();
+	texture.unbind();
+}
+
+Grass::Grass(GLdouble r, GLdouble h, GLdouble angl, float repeticionesW, float repeticionesH, float sepX, float sepY)
+{
+	mesh = Mesh::generateRectangleTex(r, h, angl, repeticionesW, repeticionesH, sepX, sepY, -r, 0);
+}
+void Grass::draw(int pos)
+{
+	texture.bind();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glLineWidth(1);
+	std::vector <dvec3> aux;
+	for(int i = 0; i < mesh->getVertices()->length()+2; i++)
+	{
+		aux.push_back(mesh->getVertices()[i]);
+		mesh->getVertices()[i].z += pos;
+	}
+	mesh->draw();
+	for (int i = 0; i < mesh->getVertices()->length()+2; i++)
+	{
+		mesh->getVertices()[i] = aux[i];
+	}
+	texture.unbind();
+
+	
+}
+
+void Grass::render(glm::dmat4 const &matrix)
+{
+	texture.loadTrans("..\\Bmps\\grass.bmp", dvec3(0, 0, 0));
+	dmat4 aux = modelMat * matrix;
+	draw(0);
+	aux = glm::rotate(aux, radians(90.0), dvec3(0, 1, 0));
+	glLoadMatrixd(value_ptr(aux));
+	draw(400);
 }
 //--------------------------------------------------------------------------
 //comentario
