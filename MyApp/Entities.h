@@ -6,23 +6,33 @@
 #include <glm.hpp>
 #include "Mesh.h"
 #include "Texture.h"
+#include "Material.h"
+#include <vector>
+#include "SpotLight.h"
+#include "Camera.h"
 
 //-------------------------------------------------------------------------
 
 class Entity 
 {
 public:
-  Entity() : modelMat(1.0) { };
+	Entity() : modelMat(1.0) {  };
   virtual ~Entity() { delete mesh; };
   Texture texture;
   virtual void render(glm::dmat4 const& modelViewMat);
+  enum Textura { Tierra, Marte, Uranus, Moon, Sun, Venus };
+  std::vector<std::string> texturaEnum = { "earth24", "mars", "BarrenReds", "moon", "sun" , "venus"};
   
 protected:
+  Material* material;
   Mesh* mesh = nullptr;
   //Mesh* mesh2 = nullptr;
   glm::dmat4 modelMat;
   virtual void draw();
   virtual void setMvM(glm::dmat4 const& modelViewMat);
+  void setModelMat(glm::dmat4 const& mMat) { modelMat = mMat; };
+  void setMaterial(Material const& mt) { if(material == nullptr) material = new Material(); *material = mt; };
+  void setTexture(Texture const& tex) { texture = tex; };
 };
 
 //-------------------------------------------------------------------------
@@ -104,6 +114,52 @@ public:
 	~Grass() {};
 	virtual void draw(int pos);
 	virtual void render(glm::dmat4 const &matrix);
+};
+
+class Sphere : public Entity
+{
+public:
+	GLUquadricObj* qObj;
+	Sphere(GLdouble ratio, GLint meridians, GLint parallels, GLint posX, GLint posY, GLint posZ, Material m, Textura tex);
+	~Sphere() {};
+	virtual void draw();
+	virtual void render(glm::dmat4 const& matrix);
+	int posX, posY, posZ;
+protected:
+	int ratio, meridians, parallels;
+};
+class EsferaLuz : public Sphere
+{
+public:
+	Sphere* sphere1;
+	Sphere* sphere2;
+	SpotLight* light;
+	Camera * cam;
+	EsferaLuz(Camera* camera, GLdouble ratio, GLint meridians, GLint parallels, GLint posX, GLint posY, GLint posZ, Material m, Textura tex);
+	~EsferaLuz() {};
+	//virtual void draw() { Sphere::draw(); };
+	virtual void render(glm::dmat4 const& matrix);
+	void switchLight ();
+	void rotate(float ang);
+	void renderIzq(glm::dmat4 const& matrix);
+	void renderDer(glm::dmat4 const& matrix);
+private:
+	bool switchLuz = true;
+	glm::fvec3 tray = {0, 0, 0};
+	glm::dvec3 posRel1;
+	glm::dvec3 posRel2;
+	glm::dvec3 aux;
+	double ang = 0;
+	//int ratio, meridians, parallels, posX, posY, posZ;
+};
+class Terreno : public Entity
+{
+public:
+	Terreno(Material m);
+	~Terreno() {};
+	//virtual void draw() { Sphere::draw(); };
+	virtual void render(glm::dmat4 const& matrix);
+	virtual void draw();
 };
 
 #endif //_H_Entities_H_

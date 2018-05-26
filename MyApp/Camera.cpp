@@ -47,7 +47,6 @@ void Camera::setAZ()
   setVM();
 }
 //-------------------------------------------------------------------------
-
 void Camera::set3D() 
 {
   eye= dvec3(500, 500, 500);
@@ -69,6 +68,16 @@ void Camera::set3D()
   viewMat = lookAt(eye, eye + front, up);
 
   setVM();
+}
+
+dvec3 Camera::getDir()
+{
+	return front;
+}
+
+dvec3 Camera::getEye()
+{
+	return eye;// -dvec3(200, 100, 0);
 }
 //-------------------------------------------------------------------------
 
@@ -129,7 +138,7 @@ void Camera::moveLR(GLdouble cs)
 {
 	eye = eye + (front * cs);
 	look = look + (front*cs);
-	viewMat = lookAt(eye, eye + front, up);
+	viewMat = lookAt(eye, eye +front, up);
 }
 
 void Camera::moveFB(GLdouble cs)
@@ -154,6 +163,7 @@ void Camera::rotatePY(GLdouble incrPitch, GLdouble incrYaw)
 	front.z = -cos(radians(ya))*cos(radians(pitc));
 	front = glm::normalize(front);
 	viewMat = lookAt(eye, eye + front, up);
+	right = normalize(cross(up, -front));
 }
 
 void Camera::setPrj()

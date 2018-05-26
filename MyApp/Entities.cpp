@@ -199,5 +199,126 @@ void Grass::render(glm::dmat4 const &matrix)
 	glLoadMatrixd(value_ptr(aux));
 	draw(400);
 }
+
+Sphere::Sphere(GLdouble ratio_, GLint meridians_, GLint parallels_, GLint posX_, GLint posY_, GLint posZ_, Material m, Textura tex)
+{
+	//gluSphere(qObj, ratio, meridians, parallels);
+	std::string algo = texturaEnum [(int)tex];
+	texture.load("..\\Bmps\\"+algo+".bmp");
+	qObj = gluNewQuadric();
+	ratio = ratio_;
+	meridians = meridians_;
+	parallels = parallels_;
+	posX = posX_;
+	posY = posY_;
+	posZ = posZ_;
+	setMaterial(m);
+}
+
+void Sphere::draw()
+{
+	texture.bind(GL_MODULATE);
+	glLineWidth(1);
+
+	glCullFace(GL_BACK);
+	gluQuadricDrawStyle(qObj, GLU_FILL);
+	gluQuadricNormals(qObj, GLU_SMOOTH);
+	gluQuadricOrientation(qObj, GLU_OUTSIDE);
+	gluQuadricTexture(qObj, GL_TRUE);
+
+	gluSphere(qObj, ratio, meridians, parallels);
+	texture.unbind();
+}
+void Sphere::render(glm::dmat4 const& matrix)
+{
+	dmat4 aux = matrix*modelMat;
+	aux = glm::translate(aux, dvec3(posX, posY, posZ));
+	glLoadMatrixd(value_ptr(aux));
+	draw();
+}
+
+EsferaLuz::EsferaLuz(Camera* camera, GLdouble ratio_, GLint meridians_, GLint parallels_, GLint posX_, GLint posY_, GLint posZ_, Material m, Textura tex) :Sphere(ratio_, meridians_, parallels_, posX_, posY_, posZ_, m, tex)
+{
+	sphere1 = new Sphere(ratio_ / 2, meridians_ /2, parallels_/2, posX_-ratio_, posY_, posZ_, m, Textura::Uranus);
+	sphere2 = new Sphere(ratio_ / 2, meridians_ / 2, parallels_ / 2, posX_ + ratio_, posY_, posZ_, m, Textura::Uranus);
+	posRel1 = {posX_-sphere1->posX, posY_-sphere1->posY, posZ_-sphere1->posZ};
+	posRel2 = { posX_ - sphere2->posX, posY_ - sphere2->posY, posZ_ - sphere2->posZ };
+	light = new SpotLight(05);
+	light->enable();
+	light->setDirFoco(dvec3(0, -1, 0));
+	light->setPos(dvec3(posX_, posY_, posZ_));
+	light->setDiffuseIntensity(1);
+	cam = camera;
+	aux = { posX, posY, posZ };
+
+}
+
+void EsferaLuz::render(glm::dmat4 const& matrix)
+{
+	//light->setPos(dvec3(posX, posY, posZ));
+	dmat4 aux = matrix*modelMat;
+	aux = glm::translate(aux, { tray.x, tray.y, tray.z });
+	aux = glm::rotate(aux, radians(ang)*100, dvec3(0, 1, 0));
+	light->load(aux);
+	glLoadMatrixd(value_ptr(aux));
+	Sphere::draw();
+	renderIzq(aux);
+	renderDer(aux);
+	
+}
+void EsferaLuz::switchLight()
+{
+	switchLuz = !switchLuz;
+	if(switchLuz)light->enable();
+	else light->disable();
+}
+
+void EsferaLuz::renderIzq(glm::dmat4 const& matrix)
+{
+	dmat4 aux = matrix*modelMat;
+	aux = glm::translate(aux, posRel1);
+	glLoadMatrixd(value_ptr(aux));
+	sphere1->draw();
+}
+void EsferaLuz::renderDer(glm::dmat4 const& matrix)
+{
+	dmat4 aux = matrix*modelMat;
+	aux = glm::translate(aux, posRel2);
+	glLoadMatrixd(value_ptr(aux));
+	sphere2->draw();
+}
+void EsferaLuz::rotate(float an)
+{
+	if(ang<360)ang += an;
+	else ang = 0;
+	tray = { 512*cos(ang), ratio*2*sin(ang) *sin(ang)+300, -512*sin(ang) *cos(ang) };
+
+
+}
+
+Terreno::Terreno(Material m)
+{
+	mesh = IndexMesh::generateTerrain();
+	texture.load("..\\Bmps\\BarrenReds.bmp");
+	setMaterial(m);
+}
+
+void Terreno::render(glm::dmat4 const& matrix)
+{
+	dmat4 aux = matrix*modelMat;
+	glLoadMatrixd(value_ptr(aux));
+	draw();
+}
+
+void Terreno::draw()
+{
+	texture.bind(GL_MODULATE);
+	glLineWidth(1);
+
+	glCullFace(GL_BACK);
+	mesh->draw();
+
+	texture.unbind();
+}
 //--------------------------------------------------------------------------
 //comentario

@@ -33,6 +33,7 @@ void display();
 void resize(int newWidth, int newHeight);
 void key(unsigned char key, int x, int y);
 void specialKey(int key, int x, int y);
+void update();
 
 //-------------------------------------------------------------------------
 
@@ -58,6 +59,7 @@ int main(int argc, char *argv[])
   glutKeyboardFunc(key);
   glutSpecialFunc(specialKey);
   glutDisplayFunc(display);
+  glutIdleFunc(update);
 
   glutMouseFunc(mouse);
   glutMotionFunc(motion);
@@ -83,6 +85,12 @@ void display()   // double buffer
   scene.render();   
     
   glutSwapBuffers();  
+}
+void update()
+{
+	scene.getEsferaLuz()->rotate(0.005);
+	glutPostRedisplay();
+
 }
 //-------------------------------------------------------------------------
 
@@ -152,6 +160,15 @@ void key(unsigned char key, int x, int y)
 	  break;
   case 'p':
 	  camera.setPrj();
+	  break;
+  case 'b': case 'B':
+	  scene.linearLightSwitch();
+	  break;
+  case 'n': case 'N':
+	  scene.cameraLightSwitch();
+	  break;
+  case 'm': case 'M':
+	  scene.getEsferaLuz()->switchLight ();
 	  break;
   default:
     need_redisplay = false;

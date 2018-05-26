@@ -6,6 +6,8 @@
 #include <vector>
 #include "Camera.h"
 #include "Entities.h"
+#include "Light.h"
+#include "SpotLight.h"
 
 //-------------------------------------------------------------------------
 
@@ -17,12 +19,31 @@ public:
     void init();
 	  void render();  
 	  Diabolo* getDiabolo();
+
+	  void linearLightSwitch() { 
+	  linearSwitch = !linearSwitch;
+	  if (linearSwitch)light->enable();
+	  else light->disable(); 
+	  };
+	  void cameraLightSwitch() {
+		  cameraSwitch = !cameraSwitch;
+		  if (cameraSwitch)cameraLight->enable();
+		  else cameraLight->disable();
+	  };
+
+	  EsferaLuz* getEsferaLuz() { return esferaLuz; };
 	  
 protected:
 	Diabolo* diabolo = nullptr;
+	Terreno* terr = nullptr;
 
+	EsferaLuz* esferaLuz;
 	  Camera* camera;
+	  Light* light;
+	  SpotLight* cameraLight;
 	  std::vector<Entity*> objetos;
+	  bool linearSwitch = true;
+	  bool cameraSwitch = true;
 };
 
 //-------------------------------------------------------------------------

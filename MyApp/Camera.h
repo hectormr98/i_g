@@ -63,6 +63,9 @@ public:
   void rotatePY(GLdouble incrPitch, GLdouble incrYaw);
   void setPrj();
   bool orto = true;
+
+  dvec3 getDir();
+  dvec3 getEye();
  
 protected:
   glm::dvec3 eye = { 0.0, 0.0, 500.0 };

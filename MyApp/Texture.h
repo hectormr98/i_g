@@ -12,11 +12,12 @@ public:
 	void loadColorBuffer(GLsizei width, GLsizei height);
 	void save(const std::string & Foto);
 	// cargar y transferir a openGL
-	void bind();
+	void bind(GLuint mix = GL_REPLACE);
 	void unbind() { glBindTexture(GL_TEXTURE_2D, 0); };
 protected:
 	GLuint w, h; // dimensiones de la imagen
 	GLuint id; // identificador interno (GPU) de la textura
 	void init();
+
 };
 

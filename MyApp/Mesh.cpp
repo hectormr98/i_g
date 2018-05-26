@@ -9,29 +9,44 @@ Mesh ::~Mesh(void)
 {
   delete[] vertices;
   delete[] colors;
+  delete[] normals;
 }
 //-------------------------------------------------------------------------
-
+void Mesh::enable()
+{
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_DOUBLE, 0, vertices);  // number of coordinates per vertex, type of each coordinate 
+		if (colors != nullptr) {
+			glEnableClientState(GL_COLOR_ARRAY);
+			glColorPointer(4, GL_DOUBLE, 0, colors);   // number of coordinates per color, type of each coordinate 
+		}
+		if (texCoords != nullptr)
+		{
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_DOUBLE, 0, texCoords);
+		}
+		if (normals != nullptr)
+		{
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glNormalPointer(GL_DOUBLE, 0, normals);
+		}
+}
+void Mesh::disable() {
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+}
 void Mesh::draw() 
 {
-  if (vertices != nullptr) {
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_DOUBLE, 0, vertices);  // number of coordinates per vertex, type of each coordinate 
-    if (colors != nullptr) {
-      glEnableClientState(GL_COLOR_ARRAY);
-      glColorPointer(4, GL_DOUBLE, 0, colors);   // number of coordinates per color, type of each coordinate 
-    }
-	if (texCoords != nullptr)
+	if (vertices != nullptr)
 	{
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glTexCoordPointer(2, GL_DOUBLE, 0, texCoords);
+		Mesh::enable();
+		glDrawArrays(type, 0, numVertices);   // kind of primitives, first, count
+		Mesh::disable();
 	}
-    glDrawArrays(type, 0, numVertices);   // kind of primitives, first, count
 
-	  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_COLOR_ARRAY);
-  }
 }
+
 //-------------------------------------------------------------------------
 
 Mesh * Mesh::generateAxesRGB(GLdouble l)
